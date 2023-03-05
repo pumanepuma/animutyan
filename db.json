@@ -1,0 +1,22 @@
+{
+  "tyan": [
+    {
+      "id": 1,
+      "name": "json-server",
+      "surname": "typicode",
+      "age":23
+    },
+    {
+      "id": 1,
+      "name": "json-server",
+      "surname": "typicode",
+      "age":23
+    },
+    {
+      "id": 1,
+      "name": "json-server",
+      "surname": "typicode",
+      "age":23
+    }
+  ]
+}

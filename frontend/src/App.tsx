@@ -1,46 +1,35 @@
-import React, { useState } from 'react';
-import logo from './logo.svg';
+import React, { createContext, useEffect, useState } from 'react';
 import './App.css';
-import useInput from './hooks/useInput';
-import useFetch from './hooks/useFetch';
-import { type } from 'os';
+import axios from 'axios';
+import { JSON_SERVER, REACT_APP_API_URL } from './constants';
+import { Auth } from './modules/auth/components/Auth';
+import {Routes, createBrowserRouter, RouterProvider} from 'react-router-dom'
+import TyansPage from './modules/tyan/pages/TyansPage';
 
-interface ITyan {
-  name:string,
-  surname: string,
-  id: string,
-  age: number
+interface TContext {
+  isAuth:boolean,
+  setIsAuth:(isAuth:boolean) => void
 }
 
-function App() {
-  const {data,loading,error} = useFetch<ITyan>('https://localhost:8000/Tyan')
-  const name = useInput("")
-  const surname = useInput("")
-  const age = useInput(0)
-  function handleClick(){
-    console.log(`${name.value} ${surname.value} ${age.value}`)
-  }
+export const Context = createContext<TContext|null>(null)
+
+export const  App = () => {
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Auth />
+    }
+  ])
+  const registerRouter = createBrowserRouter([
+    {
+      path:'/',
+      element: <TyansPage />
+    }
+  ])
+  const [isAuth,setIsAuth] = useState(false)
   return (
-    <div className="App">
-      <input type='text' placeholder='name' {...name}/>
-      <input type='text' placeholder='surname' {...surname} />
-      <input type='number' max={100} min={10} placeholder='age' {...age} />
-      <button onClick={handleClick}>Click!</button>
-      <div>
-        {
-          loading ? <h2>Loading...</h2>
-          :error ? <h2>Error</h2>
-          : <ul>
-            {
-              data.map(tyan => <li key={tyan.id}>
-                <p>{tyan.name} {tyan.surname}</p>
-              </li>)
-            }
-          </ul>
-        }
-      </div>
-    </div>
+    <Context.Provider value={{isAuth:false,setIsAuth}}>
+      <RouterProvider router={isAuth ? registerRouter : router}/>
+    </Context.Provider>
   );
 }
-
-export default App;

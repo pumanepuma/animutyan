@@ -7,12 +7,7 @@ export default function useFetch<Type>(url:string) {
     const [error,setError] = useState('')
 
     useEffect(() => {
-        axios.get(url, {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'sec-fetch-mode': 'cors'
-            }
-        })
+        axios.get(url)
         .then(res => setData(res.data))
         .catch(error => setError(error))
         .finally(() => setLoading(false))
