@@ -5,6 +5,7 @@ import { JSON_SERVER, REACT_APP_API_URL } from './constants';
 import { Auth } from './modules/auth/components/Auth';
 import {Routes, createBrowserRouter, RouterProvider} from 'react-router-dom'
 import TyansPage from './modules/tyan/pages/TyansPage';
+import AuthPage from './modules/auth/pages/AuthPage';
 
 interface TContext {
   isAuth:boolean,
@@ -17,7 +18,7 @@ export const  App = () => {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Auth />
+      element: <AuthPage />
     }
   ])
   const registerRouter = createBrowserRouter([
